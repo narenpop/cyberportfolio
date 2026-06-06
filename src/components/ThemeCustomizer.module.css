@@ -1,0 +1,117 @@
+.customizer {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Hide on mobile since hover options are harder and space is tight */
+@media (max-width: 480px) {
+  .customizer {
+    bottom: 16px;
+    right: 16px;
+  }
+}
+
+.triggerBtn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), var(--glow-shadow);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  backdrop-filter: blur(8px);
+}
+
+.triggerBtn:hover {
+  transform: rotate(45deg) scale(1.05);
+  border-color: var(--border-card-hover);
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5), 0 0 15px var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.panel {
+  display: flex;
+  gap: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  padding: 8px 12px;
+  border-radius: 30px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  transform: scale(0.9) translateX(20px);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transform-origin: right center;
+}
+
+.panelActive {
+  transform: scale(1) translateX(0);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.themeOption {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.themeOption:hover {
+  transform: scale(1.15);
+}
+
+.activeOption {
+  border-color: var(--text-primary);
+  box-shadow: 0 0 10px var(--text-primary);
+}
+
+.cyberpunkBtn {
+  background: linear-gradient(135deg, #00f2fe, #ff007f);
+}
+
+.matrixBtn {
+  background: linear-gradient(135deg, #00ff46, #008f11);
+}
+
+.sunsetBtn {
+  background: linear-gradient(135deg, #d4af37, #f39c12);
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 38px;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.themeOption:hover .tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
