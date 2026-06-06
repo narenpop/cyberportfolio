@@ -149,6 +149,16 @@ export const Projects: React.FC = () => {
       tags: ['TypeScript', 'Canvas 2D', 'Web Audio Synth', 'Local Storage'],
       demoUrl: 'https://primenest-sigma.vercel.app/',
       githubUrl: 'https://github.com/narenpop/primenest',
+    },
+    {
+      id: 5,
+      title: 'Avua',
+      shortDesc: 'Job portal website for a client where users can find jobs and apply for them.',
+      longDesc: 'Job portal website built with next js, tailwind css, and typescript. It allows users to browse jobs, apply for jobs, and manage their applications.',
+      image: '/project3.png',
+      tags: ['TypeScript', 'Canvas 2D', 'Web Audio Synth', 'Local Storage'],
+      demoUrl: 'https://avua-swart.vercel.app/',
+      githubUrl: 'https://github.com/narenpop/avua',
     }
   ];
 
