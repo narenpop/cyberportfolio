@@ -1,135 +1,58 @@
 .skills {
-  position: relative;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .filters {
   display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 48px;
+  gap: 8px;
+  margin-bottom: 32px;
   flex-wrap: wrap;
 }
 
 .filterBtn {
-  background: rgba(255, 255, 255, 0.02);
+  background: transparent;
   border: 1px solid var(--border-card);
   color: var(--text-secondary);
-  padding: 10px 24px;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .filterBtn:hover {
   border-color: var(--accent-primary);
   color: var(--accent-primary);
-  box-shadow: 0 0 10px rgba(var(--accent-primary-rgb), 0.25);
-  transform: translateY(-2px);
 }
 
 .activeFilter {
   background: var(--accent-primary);
   border-color: var(--accent-primary);
-  color: #000;
-  font-weight: 700;
-  box-shadow: var(--glow-shadow);
+  color: #fff;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 24px;
-}
-
-.skillCard {
-  background: var(--bg-card);
-  border: 1px solid var(--border-card);
-  padding: 24px 16px;
-  border-radius: 16px;
+.list {
+  list-style: none;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  text-align: center;
-  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  position: relative;
-  overflow: hidden;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-.skillCard:hover {
-  transform: translateY(-6px);
-  /* Custom color property injected inline in react */
-  border-color: var(--skill-color);
-  box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.5), 
-              0 0 15px var(--skill-color-glow);
-}
-
-.iconWrapper {
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-secondary);
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.skillCard:hover .iconWrapper {
-  color: var(--skill-color);
-  transform: scale(1.1);
-}
-
-.skillName {
-  font-size: 1rem;
-  font-weight: 600;
+.skill {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
   color: var(--text-primary);
-  letter-spacing: 0.02em;
-}
-
-.levelIndicator {
-  font-size: 0.75rem;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
   font-weight: 500;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  letter-spacing: 0.05em;
-  transition: color 0.3s ease;
+  transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
-.skillCard:hover .levelIndicator {
-  color: var(--text-secondary);
-}
-
-/* Background grid details */
-.cardGlow {
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(
-    circle, 
-    var(--skill-color-glow-soft) 0%, 
-    transparent 60%
-  );
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 1;
-}
-
-.skillCard:hover .cardGlow {
-  opacity: 1;
-}
-
-.cardContent {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
+.skill:hover {
+  border-color: var(--border-card-hover);
+  transform: translateY(-1px);
 }

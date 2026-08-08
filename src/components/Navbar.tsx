@@ -1,20 +1,17 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Volume2, VolumeX, Menu, X, Sparkles } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useAudio } from '@/context/AudioContext';
 import styles from './Navbar.module.css';
 
 export const Navbar: React.FC = () => {
-  const { audioEnabled, toggleAudio, playClick, playHover } = useAudio();
+  const { playClick, playHover } = useAudio();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 40);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -24,20 +21,9 @@ export const Navbar: React.FC = () => {
     setIsMobileMenuOpen(false);
     const element = document.getElementById(sectionId);
     if (element) {
-      // Offset for floating navbar
-      const yOffset = -80; 
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      const y = element.getBoundingClientRect().top + window.pageYOffset - 80;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
-  };
-
-  const handleAudioToggle = () => {
-    toggleAudio();
-  };
-
-  const toggleMobileMenu = () => {
-    playClick();
-    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   const menuItems = [
@@ -52,13 +38,12 @@ export const Navbar: React.FC = () => {
     <>
       <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
         <div className={styles.navContainer}>
-          <button 
-            className={styles.logo} 
+          <button
+            className={styles.logo}
             onClick={() => handleNavClick('hero')}
             onMouseEnter={playHover}
           >
-            <Sparkles size={22} className="animated-float" />
-            <span>Naren</span>
+            Naren
           </button>
 
           <nav className={styles.navLinks}>
@@ -74,41 +59,20 @@ export const Navbar: React.FC = () => {
             ))}
           </nav>
 
-          <div className={styles.controls}>
-            {/* Audio Toggle Button */}
-            <button
-              onClick={handleAudioToggle}
-              onMouseEnter={playHover}
-              className={styles.iconBtn}
-              title={audioEnabled ? 'Mute Interface Sounds' : 'Unmute Interface Sounds'}
-              aria-label="Toggle Audio"
-            >
-              {audioEnabled ? (
-                <div className={styles.audioWaves}>
-                  <div className={`${styles.wave} ${styles.waveActive}`} />
-                  <div className={`${styles.wave} ${styles.waveActive}`} />
-                  <div className={`${styles.wave} ${styles.waveActive}`} />
-                  <div className={`${styles.wave} ${styles.waveActive}`} />
-                </div>
-              ) : (
-                <VolumeX size={18} />
-              )}
-            </button>
-
-            {/* Mobile Hamburger Toggle */}
-            <button
-              onClick={toggleMobileMenu}
-              onMouseEnter={playHover}
-              className={`${styles.iconBtn} ${styles.menuToggle}`}
-              aria-label="Toggle Mobile Menu"
-            >
-              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-          </div>
+          <button
+            onClick={() => {
+              playClick();
+              setIsMobileMenuOpen(!isMobileMenuOpen);
+            }}
+            onMouseEnter={playHover}
+            className={styles.menuToggle}
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
       </header>
 
-      {/* Mobile Drawer */}
       <div className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.mobileMenuActive : ''}`}>
         {menuItems.map((item) => (
           <button

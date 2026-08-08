@@ -12,37 +12,29 @@ export const Hero: React.FC = () => {
 
   const phrases = [
     'Full-Stack Developer',
-    'UI/UX Creative Tech Designer',
-    'React & Next.js Wizard',
-    'Interactive Experience Builder',
+    'React & Next.js',
+    'Clean UI Builder',
   ];
 
-  const typingSpeed = 100;
-  const deletingSpeed = 50;
-  const pauseDuration = 2000;
-
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timer: ReturnType<typeof setTimeout>;
     const currentPhrase = phrases[phraseIndex];
+    const typingSpeed = isDeleting ? 40 : 90;
+    const pauseDuration = 1800;
 
-    if (isDeleting) {
-      // Deleting text
-      timer = setTimeout(() => {
-        setTypedText(currentPhrase.substring(0, typedText.length - 1));
-      }, deletingSpeed);
-    } else {
-      // Typing text
-      timer = setTimeout(() => {
-        setTypedText(currentPhrase.substring(0, typedText.length + 1));
-      }, typingSpeed);
-    }
-
-    // Handle transition between typing and deleting
     if (!isDeleting && typedText === currentPhrase) {
       timer = setTimeout(() => setIsDeleting(true), pauseDuration);
     } else if (isDeleting && typedText === '') {
       setIsDeleting(false);
       setPhraseIndex((prev) => (prev + 1) % phrases.length);
+    } else {
+      timer = setTimeout(() => {
+        setTypedText(
+          isDeleting
+            ? currentPhrase.substring(0, typedText.length - 1)
+            : currentPhrase.substring(0, typedText.length + 1)
+        );
+      }, typingSpeed);
     }
 
     return () => clearTimeout(timer);
@@ -52,63 +44,43 @@ export const Hero: React.FC = () => {
     playClick();
     const element = document.getElementById(sectionId);
     if (element) {
-      const yOffset = -80;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      const y = element.getBoundingClientRect().top + window.pageYOffset - 80;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
 
   return (
     <section id="hero" className={styles.hero}>
-      {/* Dynamic blurred ambient glow backdrops */}
-      <div className={styles.glowBall1} />
-      <div className={styles.glowBall2} />
-
+      <div className={styles.atmosphere} aria-hidden />
       <div className={styles.content}>
-        <span className={styles.greeting}>Welcome to my space</span>
-        
+        <p className={styles.brand}>Naren</p>
         <h1 className={styles.title}>
-          <span className={styles.gradientText}>Fullstack developer</span>
-          <span className={styles.accentText}>Immersive Digital Art</span>
+          Building clear, fast web products
         </h1>
-
-        <div className={styles.subtitle}>
-          I am a fullstack developer <span className={styles.typewriter}>{typedText}</span>
-        </div>
-
-        <p className={styles.description}>
-        with 3+ years of experience building fast, responsive, and user-friendly web applications. I specialize in React.js, Next.js, and Tailwind CSS, transforming ideas into engaging digital experiences with clean code and modern design.
+        <p className={styles.subtitle}>
+          <span className={styles.typewriter}>{typedText}</span>
         </p>
-
+        <p className={styles.description}>
+          Full-stack developer with 3+ years crafting responsive apps in React,
+          Next.js, and TypeScript — focused on clean code and calm, usable design.
+        </p>
         <div className={styles.ctas}>
           <button
             onClick={() => handleScrollTo('projects')}
             onMouseEnter={playHover}
             className={styles.btnPrimary}
           >
-            Explore Projects
+            View projects
           </button>
           <button
             onClick={() => handleScrollTo('contact')}
             onMouseEnter={playHover}
             className={styles.btnSecondary}
           >
-            Get In Touch
+            Get in touch
           </button>
         </div>
       </div>
-
-      <button
-        onClick={() => handleScrollTo('about')}
-        onMouseEnter={playHover}
-        className={styles.scrollIndicator}
-        aria-label="Scroll to About"
-      >
-        <span>Scroll Down</span>
-        <div className={styles.mouseIcon}>
-          <div className={styles.wheel} />
-        </div>
-      </button>
     </section>
   );
 };

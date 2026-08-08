@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Briefcase } from 'lucide-react';
-import { useAudio } from '@/context/AudioContext';
 import styles from './Experience.module.css';
 
 interface ExperienceItem {
@@ -13,8 +11,7 @@ interface ExperienceItem {
   description: string;
 }
 
-const TimelineCard: React.FC<{ item: ExperienceItem; index: number }> = ({ item, index }) => {
-  const { playHover } = useAudio();
+const TimelineCard: React.FC<{ item: ExperienceItem }> = ({ item }) => {
   const [isVisible, setIsVisible] = useState(false);
   const elementRef = useRef<HTMLDivElement | null>(null);
 
@@ -26,38 +23,27 @@ const TimelineCard: React.FC<{ item: ExperienceItem; index: number }> = ({ item,
           observer.disconnect();
         }
       },
-      { threshold: 0.2, rootMargin: '0px 0px -50px 0px' }
+      { threshold: 0.2 }
     );
 
-    if (elementRef.current) {
-      observer.observe(elementRef.current);
-    }
-
+    if (elementRef.current) observer.observe(elementRef.current);
     return () => observer.disconnect();
   }, []);
 
-  const isEven = index % 2 === 0;
-
   return (
-    <div
+    <article
       ref={elementRef}
       className={`${styles.item} ${isVisible ? styles.itemRevealed : ''}`}
     >
-      <div className={styles.dot} />
-      <div
-        className={`${styles.card} ${isEven ? styles.leftCard : styles.rightCard}`}
-        onMouseEnter={playHover}
-      >
-        <div className={styles.header}>
-          <div>
-            <h3 className={styles.role}>{item.role}</h3>
-            <span className={styles.company}>{item.company}</span>
-          </div>
-          <span className={styles.date}>{item.date}</span>
-        </div>
+      <div className={styles.meta}>
+        <span className={styles.date}>{item.date}</span>
+        <span className={styles.company}>{item.company}</span>
+      </div>
+      <div className={styles.body}>
+        <h3 className={styles.role}>{item.role}</h3>
         <p className={styles.description}>{item.description}</p>
       </div>
-    </div>
+    </article>
   );
 };
 
@@ -66,36 +52,35 @@ export const Experience: React.FC = () => {
     {
       id: 1,
       role: 'Lead Frontend Engineer',
-      company: 'RR IT solutions',
-      date: '2024 - PRESENT',
-      description: 'Architecting high-performance web applications using Next.js App Router and the new React Compiler. Led the design and development of an internal custom web-component design system, cutting initial load times by 40% and increasing developer velocity by 25%.',
+      company: 'RR IT Solutions',
+      date: '2024 — Present',
+      description:
+        'Building high-performance web apps with Next.js and React. Led an internal design system that cut load times and sped up delivery.',
     },
     {
       id: 2,
-      role: 'Frontend developer',
-      company: 'Outofbox technologies',
-      date: '2020 - 2022',
-      description: 'Engineered immersive, highly animated 3D visual marketing campaigns and audio-reactive web installations for premium clients. Optimized complex canvas renderings and implemented low-latency Web Audio API synthesizers and interactions.',
+      role: 'Frontend Developer',
+      company: 'Outofbox Technologies',
+      date: '2020 — 2022',
+      description:
+        'Shipped animated marketing experiences and interactive web installs for clients, with a focus on performance and polish.',
     },
     {
       id: 3,
       role: 'Analyst',
       company: 'Amazon',
-      date: '2019 - 2019',
-      description: 'Maintained and scaled high-traffic PostgreSQL database clusters and constructed real-time messaging dashboards. Designed fluid UI animations and micro-interactions, raising user engagement scores by 18%.',
+      date: '2019',
+      description:
+        'Supported data and dashboard work on high-traffic systems, improving clarity and day-to-day usability for internal teams.',
     },
   ];
 
   return (
-    <section id="experience" className={`section-container ${styles.experience}`}>
-      <h2 className="section-title">
-        <Briefcase size={28} style={{ marginRight: '4px', verticalAlign: 'middle' }} />
-        Work Experience
-      </h2>
-
+    <section id="experience" className="section-container">
+      <h2 className="section-title">Experience</h2>
       <div className={styles.timeline}>
-        {experiences.map((item, index) => (
-          <TimelineCard key={item.id} item={item} index={index} />
+        {experiences.map((item) => (
+          <TimelineCard key={item.id} item={item} />
         ))}
       </div>
     </section>
